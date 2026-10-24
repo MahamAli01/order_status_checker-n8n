@@ -1,0 +1,394 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Order Status Checker",
+        "formDescription": "Welcome to our Order Status Checker! Enter your Order ID below to check the current status of your order.\n",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Order ID",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        -464,
+        32
+      ],
+      "id": "479919f5-3e32-42a8-a468-35147062b154",
+      "name": "On form submission",
+      "webhookId": "44c6fc07-13ce-4ebe-8b5a-4f977c555f42"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b5538afd-8c7c-4f34-9f74-7373a9fcb010",
+              "name": "Order_id",
+              "value": "={{ $json['Order ID'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -304,
+        32
+      ],
+      "id": "01c46917-bcb0-4548-adce-6ef0c49c323e",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "5778d8df-6d85-49bb-8c25-d0b3c6692dbb",
+              "leftValue": "={{ $json.Order_id }}",
+              "rightValue": "ORD101",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.4,
+      "position": [
+        -160,
+        -80
+      ],
+      "id": "d798557e-99fa-4ee9-bc1f-48daea1d77ca",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e26c37e7-c069-4614-969f-6496c9e6c3d5",
+              "name": "=Order_id",
+              "value": "={{ $json.Order_id }}",
+              "type": "string"
+            },
+            {
+              "id": "aa108866-48c4-47fd-b8ca-998c4d01896c",
+              "name": "order_status",
+              "value": "Shipped",
+              "type": "string"
+            },
+            {
+              "id": "2f93948d-c0e4-4034-a4e8-475d173433bf",
+              "name": "message",
+              "value": "Your order has been shipped!",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        0,
+        -160
+      ],
+      "id": "8a2d0099-9390-4963-bc31-cc220605ab0b",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dcd12ced-bda7-4527-9257-f256d2e67987",
+              "name": "Order_id",
+              "value": "={{ $('Edit Fields').item.json.Order_id }}",
+              "type": "string"
+            },
+            {
+              "id": "738ef9e8-5b28-4aa0-b1f7-949c9a160f2a",
+              "name": "order_status",
+              "value": "Not Found",
+              "type": "string"
+            },
+            {
+              "id": "3720d2ea-3401-4a3b-ab86-408ec5a65a48",
+              "name": "message",
+              "value": "Sorry, we could not find your order. Please check your Order ID.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        592,
+        192
+      ],
+      "id": "66808d7a-0298-415a-9fd3-746ed559eb3c",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "e7c712c1-c865-443a-924f-0c368b5a89b3",
+              "leftValue": "={{ $json.Order_id }}",
+              "rightValue": "ORD102",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.4,
+      "position": [
+        32,
+        16
+      ],
+      "id": "e00a3587-843d-4036-af55-49b610b4031e",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "baa560d4-6c7a-472a-9ae9-aafe1532f517",
+              "name": "=Order_id",
+              "value": "={{ $json.Order_id }}",
+              "type": "string"
+            },
+            {
+              "id": "42daabae-808c-4b18-837c-abc177afdad7",
+              "name": "order_status",
+              "value": "Processing",
+              "type": "string"
+            },
+            {
+              "id": "312520b1-e582-42c6-9bea-e447d8f259da",
+              "name": "message",
+              "value": "Your order is being processed.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        304,
+        -16
+      ],
+      "id": "4844120e-db70-4143-9682-c3dc2831ff39",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "bf1f5fc8-9cb1-402a-aca2-883516ed9526",
+              "leftValue": "={{ $json.Order_id }}",
+              "rightValue": "ORD103",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.4,
+      "position": [
+        320,
+        144
+      ],
+      "id": "9fa81c5e-bbf4-40d7-b6cd-d87d1b333531",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e8917cea-bf66-499b-89c3-c2d126fd0401",
+              "name": "={{ $('On form submission').first().json['Order ID'] }}",
+              "value": "={{ $json.Order_id }}",
+              "type": "string"
+            },
+            {
+              "id": "2f9824f8-ce93-40ff-b9b4-9f030a934b98",
+              "name": "order_status",
+              "value": "Delivered",
+              "type": "string"
+            },
+            {
+              "id": "2cfe2f5c-9756-4c2e-acd9-35d5dd880a8b",
+              "name": "message",
+              "value": "Your order has been delivered!",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        560,
+        0
+      ],
+      "id": "796a8146-1da0-4031-b402-6876dcea92f0",
+      "name": "Edit Fields4"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        []
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        []
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "a546833f-450a-4f17-a81f-7116fb101ca1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a6b9ddd293c5d6289f23b46899da8b3e0e98072037df0af281e2cf3bc7064932"
+  },
+  "nodeGroups": [],
+  "id": "mKhk74VY5WbcMdmg",
+  "tags": []
+}
